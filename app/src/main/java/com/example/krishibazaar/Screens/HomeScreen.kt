@@ -267,9 +267,7 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.spacedBy(16.dp), // Horizontal spacing between items
                     userScrollEnabled = false,
                     modifier = Modifier
-                    //.padding(innerPadding)
-                    //.fillMaxSize()
-                    //.padding(16.dp)
+
                 ) {
                     items(icons.size) { index ->
                         CircularButton(
