@@ -77,7 +77,7 @@ dependencies {
 
     implementation (libs.jetbrains.kotlinx.serialization.json)
 
-    implementation(kotlin("script-runtime"))
+    //implementation(kotlin("script-runtime"))
 
 
 }

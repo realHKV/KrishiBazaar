@@ -1,8 +1,10 @@
 package com.example.krishibazaar.Screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 //import androidx.compose.foundation.layout.FlowColumnScopeInstance.align
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +19,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -34,7 +37,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -42,10 +47,12 @@ import com.example.krishibazaar.Data.itemData
 import com.example.krishibazaar.R
 
 @Composable
-fun SaleItemCard(item: itemData) {
+fun SaleItemCard(item: itemData, onClickToDetailScreen:(itemData) -> Unit) {
+    val filledStarPainter = painterResource(id = R.drawable.cool_star)
     Card(
         modifier = Modifier
             .padding(4.dp)
+            .clickable { onClickToDetailScreen(item) }
             .fillMaxWidth(),
         //elevation = 4.dp
     ) {
@@ -73,18 +80,30 @@ fun SaleItemCard(item: itemData) {
             Column(
                 verticalArrangement = Arrangement.Center
             ) {
+                Spacer(modifier = Modifier.height(4.dp))
                 Text(text = item.name, style = MaterialTheme.typography.titleSmall)
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "$${item.originalPrice}",
-                    style = MaterialTheme.typography.bodySmall,
-                    textDecoration = TextDecoration.LineThrough,
-                    color = Color.Gray
-                )
-                Text(
-                    text = "$${item.salePrice}",
+                Spacer(modifier = Modifier.height(4.dp))
+                Row {
+                    Text(
+                        text = "\u20B9 ${item.salePrice} / kg  ",
+                        style = MaterialTheme
+                            .typography.labelLarge,
+                        fontWeight = FontWeight.Bold,
+                        //modifier = Modifier.padding(8.dp)
+                    )
+                    Text(
+                        text = item.originalPrice.toString(),
+                        style = MaterialTheme.typography.labelLarge,
+                        textDecoration = TextDecoration.LineThrough,
+                        //modifier = Modifier.padding(8.dp)
+                    )
+                }
+                RatingBar(
+                    currentRating = item.stars,
+                    filledStar = filledStarPainter,
                     style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.secondary
+                    startPadding = 0,
+                    show = false
                 )
             }
         }
@@ -95,6 +114,7 @@ fun SaleItemCard(item: itemData) {
 @Composable
 fun SearchScreen(
     onClickToHomeScreen: () -> Unit,
+    onClickToDetailScreen: (itemData) -> Unit,
     SampleItems: List<itemData>
     //saleItems: List<itemData>
 ){
@@ -108,7 +128,7 @@ fun SearchScreen(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Localized description",
-                            tint = MaterialTheme.colorScheme.inversePrimary
+                            tint = colorResource(id = R.color.white)//MaterialTheme.colorScheme.inversePrimary
                         )
                     }
                 },
@@ -126,13 +146,15 @@ fun SearchScreen(
                         Icon(
                             imageVector = Icons.Default.AccountCircle,
                             contentDescription = "Login",
-                            tint = MaterialTheme.colorScheme.inversePrimary
+                            tint = colorResource(id = R.color.white)//MaterialTheme.colorScheme.inversePrimary
                         )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.secondary,
-                    titleContentColor = MaterialTheme.colorScheme.inversePrimary,
+//                    containerColor = MaterialTheme.colorScheme.secondary,
+//                    titleContentColor = MaterialTheme.colorScheme.inversePrimary,
+                    containerColor = colorResource(id = R.color.teal_700),
+                    titleContentColor = colorResource(id = R.color.white)
                 )
             ) 
         }
@@ -155,7 +177,10 @@ fun SearchScreen(
             )
             Button(
                 onClick = { onClickToHomeScreen() },
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(id = R.color.teal_700) // Customize the button color here
+                )
             ) {
                 Text(text = "Home")
             }
@@ -164,7 +189,10 @@ fun SearchScreen(
                 //contentPadding = innerpadding
             ){
                 items(SampleItems.size) { item ->
-                    SaleItemCard(item = SampleItems[item])
+                    SaleItemCard(
+                        item = SampleItems[item],
+                        onClickToDetailScreen = onClickToDetailScreen
+                    )
                 }
             }
 
@@ -181,16 +209,106 @@ fun SaleItemScreenPreview() {
     val painter2: Painter = painterResource(id = R.drawable.lud)
     val painter3: Painter = painterResource(id = R.drawable.no_maidens)
     val sampleItems = listOf(
-        itemData(1, "Aloo (Potato)", painter1, 1000.0, 850.0),
-        itemData(2, "Baingan (Eggplant)", painter1, 600.0, 450.0),
-        itemData(3, "Gheeya (Ridge Gourd)", painter2, 200.0, 150.0),
-        itemData(4, "Palak (Spinach)", painter1, 300.0, 250.0),
-        itemData(5, "Mooli (Radish)", painter1, 180.0, 120.0),
-        itemData(6, "Bhindi (Okra)", painter1, 400.0, 320.0),
-        itemData(7, "Kaddu (Pumpkin)", painter1, 350.0, 280.0),
-        itemData(8, "Gajar (Carrot)", painter3, 250.0, 200.0),
-        itemData(9, "Masoor (Lentils)", painter3, 1200.0, 980.0),
-        itemData(10, "Tractor", painter2, 150000.0, 130000.0)
+        itemData(
+            id = 1,
+            name = "Aloo (Potato)",
+            soldBy = "Shankar Singh Gaonwala",
+            stars = 5,
+            description = "Fresh, organic potatoes from my farm. Perfect for curries, fries, or a hearty aloo paratha. Grown with love and minimal use of chemicals.",
+            painter = painter1,
+            originalPrice = 1000.0,
+            salePrice = 850.0
+        ),
+        itemData(
+            id = 2,
+            name = "Baingan (Eggplant)",
+            soldBy = "Girdharilal Yadav",
+            stars = 4,
+            description = "Plump and shiny eggplants, ready to be roasted or turned into a delicious baingan bharta. Grown in the rich soil of my village farm.",
+            painter = painter1,
+            originalPrice = 600.0,
+            salePrice = 450.0
+        ),
+        itemData(
+            id = 3,
+            name = "Gheeya (Ridge Gourd)",
+            soldBy = "Kamala Devi",
+            stars = 4,
+            description = "Tender and fresh gheeya, ideal for light curries and stews. Handpicked from my garden every morning to ensure the best quality.",
+            painter = painter2,
+            originalPrice = 200.0,
+            salePrice = 150.0
+        ),
+        itemData(
+            id = 4,
+            name = "Palak (Spinach)",
+            soldBy = "Ramprasad Sharma",
+            stars = 5,
+            description = "Green and leafy spinach, full of iron and freshness. My palak is a favorite for making saag, palak paneer, or a healthy salad.",
+            painter = painter1,
+            originalPrice = 300.0,
+            salePrice = 250.0
+        ),
+        itemData(
+            id = 5,
+            name = "Mooli (Radish)",
+            soldBy = "Ramesh Kumar",
+            stars = 4,
+            description = "Crisp and spicy radishes, perfect for a winter salad or to add crunch to your meals. Grown in our family farm using traditional methods.",
+            painter = painter1,
+            originalPrice = 180.0,
+            salePrice = 120.0
+        ),
+        itemData(
+            id = 6,
+            name = "Bhindi (Okra)",
+            soldBy = "Suresh Kisan",
+            stars = 5,
+            description = "Fresh bhindi, known for its tenderness and perfect for making bhindi fry or curry. Straight from my fields to your kitchen.",
+            painter = painter1,
+            originalPrice = 400.0,
+            salePrice = 320.0
+        ),
+        itemData(
+            id = 7,
+            name = "Kaddu (Pumpkin)",
+            soldBy = "Bhawani Shankar",
+            stars = 4,
+            description = "Sweet and ripe pumpkin, great for making soups, curries, or even desserts. Harvested at the peak of its sweetness.",
+            painter = painter1,
+            originalPrice = 350.0,
+            salePrice = 280.0
+        ),
+        itemData(
+            id = 8,
+            name = "Gajar (Carrot)",
+            soldBy = "Laxmi Narayan",
+            stars = 5,
+            description = "Bright orange carrots, crunchy and sweet. Perfect for salads, juices, or traditional halwa. Grown in my small farm with care.",
+            painter = painter3,
+            originalPrice = 250.0,
+            salePrice = 200.0
+        ),
+        itemData(
+            id = 9,
+            name = "Masoor (Lentils)",
+            soldBy = "Hari Singh",
+            stars = 5,
+            description = "High-quality masoor dal, perfect for daily cooking. These lentils are rich in protein and have been hand-sorted for the best quality.",
+            painter = painter3,
+            originalPrice = 1200.0,
+            salePrice = 980.0
+        ),
+        itemData(
+            id = 10,
+            name = "Tractor",
+            soldBy = "Rajendra Mechanic",
+            stars = 4,
+            description = "A reliable tractor, perfect for plowing and other farm activities. Well-maintained and ready to serve your agricultural needs.",
+            painter = painter2,
+            originalPrice = 150000.0,
+            salePrice = 130000.0
+        )
     )
-    SearchScreen({}, sampleItems)
+    SearchScreen({},{}, sampleItems)
 }

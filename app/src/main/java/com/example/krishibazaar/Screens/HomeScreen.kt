@@ -1,6 +1,7 @@
 package com.example.krishibazaar.Screens
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,10 +26,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -47,11 +51,15 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -75,9 +83,9 @@ fun CircularButton(icon: @Composable () -> Unit, text: String) {
                 pressedElevation = 15.dp,
                 disabledElevation = 0.dp
             ) ,
-            border = BorderStroke(1.dp, Color.Red),
+            border = BorderStroke(1.dp, colorResource(id = R.color.white)),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.DarkGray, // Set the background color here
+                containerColor = colorResource(id = R.color.teal_700), // Set the background color here
                 contentColor = Color.Red // Set the text/icon color here
             )
             ,
@@ -119,32 +127,32 @@ fun OutlinedCardExample() {
 //        horizontalAlignment = Alignment.CenterHorizontally,
 //        verticalArrangement = Arrangement.Top
     ) {
-        Text(
-            text = "idk",
+        Image(
+            painter = painterResource(id = R.drawable.greetingbig),
+            contentDescription = "item.name",
+            contentScale = ContentScale.FillBounds,
             modifier = Modifier
-                .padding(16.dp),
-            textAlign = TextAlign.Center,
+
+                .fillMaxSize()
+                //.size(width = 1000.dp, height = 150.dp)
+                .clip(RectangleShape)
         )
+//        Text(
+//            text = "idk",
+//            modifier = Modifier
+//                .padding(16.dp),
+//            textAlign = TextAlign.Center,
+//        )
     }
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     onClickToSearchScreen: () -> Unit,
+    onClickToDetailScreen: (itemData) -> Unit,
     SampleItems: List<itemData>
 ) {
-    val icons = listOf(
-        Icons.Default.Favorite,
-        Icons.Default.Star,
-        Icons.Default.Home,
-        Icons.Default.Search,
-        Icons.Default.Settings,
-        Icons.Default.AccountCircle
-    )
 
-    val iconDescriptions = listOf(
-        "Favourite", "Star", "Home", "Search", "Settings", "Account"
-    )
     val scrollState = rememberScrollState()
     Scaffold(
         topBar = {
@@ -154,7 +162,7 @@ fun HomeScreen(
                      Icon(
                          imageVector = Icons.AutoMirrored.Filled.List,
                          contentDescription = "Localized description",
-                         tint = MaterialTheme.colorScheme.inversePrimary
+                         tint = colorResource(id = R.color.white)//MaterialTheme.colorScheme.inversePrimary
                      )
                  }
              },
@@ -165,59 +173,61 @@ fun HomeScreen(
                      Icon(
                          imageVector = Icons.Default.Search,
                          contentDescription = "Search",
-                         tint = MaterialTheme.colorScheme.inversePrimary
+                         tint = colorResource(id = R.color.white)//MaterialTheme.colorScheme.inversePrimary
                      )
                  }
                  IconButton(onClick = { /* Handle login icon click */ }) {
                      Icon(
                          imageVector = Icons.Default.AccountCircle,
                          contentDescription = "Login",
-                         tint = MaterialTheme.colorScheme.inversePrimary
+                         tint = colorResource(id = R.color.white)//MaterialTheme.colorScheme.inversePrimary
                      )
                  }
              },
              colors = TopAppBarDefaults.topAppBarColors(
-                 containerColor = MaterialTheme.colorScheme.secondary,
-                 titleContentColor = MaterialTheme.colorScheme.inversePrimary,
+//                 containerColor = MaterialTheme.colorScheme.secondary,
+//                 titleContentColor = MaterialTheme.colorScheme.inversePrimary,
+                 containerColor = colorResource(id = R.color.teal_700),
+                 titleContentColor = colorResource(id = R.color.white)
              )
          ) },
-        floatingActionButton = {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize(),
-                contentAlignment = Alignment.BottomCenter // Align FAB at the bottom center of the Box
-            ){
-                FloatingActionButton(
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .size(70.dp)
-                        .offset(y = (50).dp) // Adjust the offset to position the FAB above the bottom bar
-
-                        //.align(Alignment.CenterHorizontally) // Center the FAB horizontally
-                        .shadow(elevation = 10.dp, shape = CircleShape)
-                    ,
-                ) {
-                    Icon(
-
-                        imageVector = Icons.Default.Add,
-                        contentDescription = "Localized description",
-                        tint = MaterialTheme.colorScheme.inversePrimary
-                    )
-                }
-            }
-
-        },
-        bottomBar = {
-            NavigationBar(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(64.dp)
-                ,
-                containerColor = MaterialTheme.colorScheme.secondary,
-            ) {
-
-            }
-        },
+//        floatingActionButton = {
+//            Box(
+//                modifier = Modifier
+//                    .fillMaxSize(),
+//                contentAlignment = Alignment.BottomCenter // Align FAB at the bottom center of the Box
+//            ){
+//                FloatingActionButton(
+//                    onClick = { /*TODO*/ },
+//                    modifier = Modifier
+//                        .size(70.dp)
+//                        .offset(y = (50).dp) // Adjust the offset to position the FAB above the bottom bar
+//
+//                        //.align(Alignment.CenterHorizontally) // Center the FAB horizontally
+//                        .shadow(elevation = 10.dp, shape = CircleShape)
+//                    ,
+//                ) {
+//                    Icon(
+//
+//                        imageVector = Icons.Default.Add,
+//                        contentDescription = "Localized description",
+//                        tint = MaterialTheme.colorScheme.inversePrimary
+//                    )
+//                }
+//            }
+//
+//        },
+//        bottomBar = {
+//            NavigationBar(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(64.dp)
+//                ,
+//                containerColor = MaterialTheme.colorScheme.secondary,
+//            ) {
+//
+//            }
+//        },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
         Column(modifier = Modifier
@@ -230,10 +240,24 @@ fun HomeScreen(
         ){
             //Spacer(modifier = Modifier.height(16.dp))
             OutlinedCardExample()
+
+            val icons = listOf(
+                Icons.Default.AccountCircle,
+                Icons.Default.Star,
+                Icons.Default.LocationOn,
+                Icons.Default.Settings,
+                Icons.Default.CheckCircle,
+                Icons.Default.ShoppingCart
+            )
+            val iconDescriptions = listOf(
+                "Near You","Categories", "Ai Chatbot", "Rent", "Buy", "Sell"
+            )
+            //"CartX","Ai ChatbotX","Near YouX","AccountX","Mandi RatesX", "SettingsX",
+
             Box(
                 modifier = Modifier
                     //.wrapContentHeight()
-                    .height(290.dp)
+                    .height(250.dp)
                     .padding(4.dp)
             ){
                 LazyVerticalGrid(
@@ -266,16 +290,18 @@ fun HomeScreen(
             }
 
 
-            Spacer(modifier = Modifier.height(16.dp))
+            //Spacer(modifier = Modifier.height(16.dp))
+
             Text(
-                text = "Hot Dog Market frfr --->",
+                text = "Trending around you --->",
                 modifier = Modifier
-                    .padding(start = 32.dp),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
+                    .padding(start = 24.dp),
+                //fontSize = 16.sp,
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.W900,
 
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            //Spacer(modifier = Modifier.height(16.dp))
 
             val painter= painterResource(id = R.drawable.doge)
             val codes  = listOf("1","2","3","4","5")
@@ -287,7 +313,7 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(SampleItems.size) { item ->
-                        SaleItemCard(item = SampleItems[item])
+                        SaleItemCard(item = SampleItems[item],onClickToDetailScreen = onClickToDetailScreen)
                     }
 
 //                    items(SampleItems.size) { index ->
@@ -298,16 +324,14 @@ fun HomeScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "Hot Dog Market 2 frfr --->",
+                text = "Recently Viewed  --->",
                 modifier = Modifier
-                    .padding(start = 32.dp),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-
-                )
-            Spacer(modifier = Modifier.height(16.dp))
+                    .padding(start = 24.dp),
+                //fontSize = 16.sp,
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.W900
+            )
 
             Box(modifier = Modifier.fillMaxWidth()){
                 LazyRow (
@@ -318,7 +342,7 @@ fun HomeScreen(
                 ) {
 
                     items(SampleItems.size) { item ->
-                        SaleItemCard(item = SampleItems[item])
+                        SaleItemCard(item = SampleItems[item],onClickToDetailScreen = onClickToDetailScreen)
                     }
                 }
             }
@@ -335,16 +359,106 @@ fun HomescreenPreview(){
     val painter2: Painter = painterResource(id = R.drawable.lud)
     val painter3: Painter = painterResource(id = R.drawable.no_maidens)
     val sampleItems = listOf(
-        itemData(1, "Aloo (Potato)", painter1, 1000.0, 850.0),
-        itemData(2, "Baingan (Eggplant)", painter1, 600.0, 450.0),
-        itemData(3, "Gheeya (Ridge Gourd)", painter2, 200.0, 150.0),
-        itemData(4, "Palak (Spinach)", painter1, 300.0, 250.0),
-        itemData(5, "Mooli (Radish)", painter1, 180.0, 120.0),
-        itemData(6, "Bhindi (Okra)", painter1, 400.0, 320.0),
-        itemData(7, "Kaddu (Pumpkin)", painter1, 350.0, 280.0),
-        itemData(8, "Gajar (Carrot)", painter3, 250.0, 200.0),
-        itemData(9, "Masoor (Lentils)", painter3, 1200.0, 980.0),
-        itemData(10, "Tractor", painter2, 150000.0, 130000.0)
+        itemData(
+            id = 1,
+            name = "Aloo (Potato)",
+            soldBy = "Shankar Singh Gaonwala",
+            stars = 5,
+            description = "Fresh, organic potatoes from my farm. Perfect for curries, fries, or a hearty aloo paratha. Grown with love and minimal use of chemicals.",
+            painter = painter1,
+            originalPrice = 1000.0,
+            salePrice = 850.0
+        ),
+        itemData(
+            id = 2,
+            name = "Baingan (Eggplant)",
+            soldBy = "Girdharilal Yadav",
+            stars = 4,
+            description = "Plump and shiny eggplants, ready to be roasted or turned into a delicious baingan bharta. Grown in the rich soil of my village farm.",
+            painter = painter1,
+            originalPrice = 600.0,
+            salePrice = 450.0
+        ),
+        itemData(
+            id = 3,
+            name = "Gheeya (Ridge Gourd)",
+            soldBy = "Kamala Devi",
+            stars = 4,
+            description = "Tender and fresh gheeya, ideal for light curries and stews. Handpicked from my garden every morning to ensure the best quality.",
+            painter = painter2,
+            originalPrice = 200.0,
+            salePrice = 150.0
+        ),
+        itemData(
+            id = 4,
+            name = "Palak (Spinach)",
+            soldBy = "Ramprasad Sharma",
+            stars = 5,
+            description = "Green and leafy spinach, full of iron and freshness. My palak is a favorite for making saag, palak paneer, or a healthy salad.",
+            painter = painter1,
+            originalPrice = 300.0,
+            salePrice = 250.0
+        ),
+        itemData(
+            id = 5,
+            name = "Mooli (Radish)",
+            soldBy = "Ramesh Kumar",
+            stars = 4,
+            description = "Crisp and spicy radishes, perfect for a winter salad or to add crunch to your meals. Grown in our family farm using traditional methods.",
+            painter = painter1,
+            originalPrice = 180.0,
+            salePrice = 120.0
+        ),
+        itemData(
+            id = 6,
+            name = "Bhindi (Okra)",
+            soldBy = "Suresh Kisan",
+            stars = 5,
+            description = "Fresh bhindi, known for its tenderness and perfect for making bhindi fry or curry. Straight from my fields to your kitchen.",
+            painter = painter1,
+            originalPrice = 400.0,
+            salePrice = 320.0
+        ),
+        itemData(
+            id = 7,
+            name = "Kaddu (Pumpkin)",
+            soldBy = "Bhawani Shankar",
+            stars = 4,
+            description = "Sweet and ripe pumpkin, great for making soups, curries, or even desserts. Harvested at the peak of its sweetness.",
+            painter = painter1,
+            originalPrice = 350.0,
+            salePrice = 280.0
+        ),
+        itemData(
+            id = 8,
+            name = "Gajar (Carrot)",
+            soldBy = "Laxmi Narayan",
+            stars = 5,
+            description = "Bright orange carrots, crunchy and sweet. Perfect for salads, juices, or traditional halwa. Grown in my small farm with care.",
+            painter = painter3,
+            originalPrice = 250.0,
+            salePrice = 200.0
+        ),
+        itemData(
+            id = 9,
+            name = "Masoor (Lentils)",
+            soldBy = "Hari Singh",
+            stars = 5,
+            description = "High-quality masoor dal, perfect for daily cooking. These lentils are rich in protein and have been hand-sorted for the best quality.",
+            painter = painter3,
+            originalPrice = 1200.0,
+            salePrice = 980.0
+        ),
+        itemData(
+            id = 10,
+            name = "Tractor",
+            soldBy = "Rajendra Mechanic",
+            stars = 4,
+            description = "A reliable tractor, perfect for plowing and other farm activities. Well-maintained and ready to serve your agricultural needs.",
+            painter = painter2,
+            originalPrice = 150000.0,
+            salePrice = 130000.0
+        )
     )
-    HomeScreen({}, sampleItems)
+    HomeScreen({},{}, sampleItems)
 }

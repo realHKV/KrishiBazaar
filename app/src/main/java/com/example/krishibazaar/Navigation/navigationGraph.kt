@@ -4,7 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.example.krishibazaar.Data.itemData
+import com.example.krishibazaar.Screens.DetailScreen
 import com.example.krishibazaar.Screens.HomeScreen
 import com.example.krishibazaar.Screens.SearchScreen
 
@@ -17,21 +19,25 @@ fun navigation(SampleItems: List<itemData>) {
                 SampleItems = SampleItems,
                 onClickToSearchScreen = {
                     navController.navigate(route = SearchScreenRoute)
-                }
+                },
 
-//                onClickToDetail = {
-//                    navController.navigate(route = detailroute(it))
-//                },
+                onClickToDetailScreen = {
+                    navController.navigate(route = DetailScreenRoute(it.id))
+                }
 //                onNavigateToAbout = {
 //                    navController.navigate(route = AboutRoute)
 //                }
             )
         }
         composable<SearchScreenRoute>{
+
                 SearchScreen(
                     SampleItems = SampleItems,
                     onClickToHomeScreen = {
                         navController.navigate(route = HomeScreenRoute)
+                    },
+                    onClickToDetailScreen = {
+                        navController.navigate(route = DetailScreenRoute(it.id))
                     }
                 )
 //            val args = it.toRoute<detailroute>()
@@ -41,6 +47,22 @@ fun navigation(SampleItems: List<itemData>) {
 //                },
 //                onNavigateToAbout = {
 //                    navController.navigate(route = AboutRoute)
+//                }
+//            )
+        }
+
+        composable<DetailScreenRoute>{ it ->
+            val args = it.toRoute<DetailScreenRoute>()
+            SampleItems.find { it.id == args.id }?.let {
+                DetailScreen(it,
+                    onClickToSearchScreen = {
+                        navController.navigate(route = SearchScreenRoute)
+                    }
+                )
+            }
+//            DetailScreen(args.id,
+//                onClickToSearchScreen = {
+//                    navController.navigate(route = HomeScreenRoute)
 //                }
 //            )
         }
