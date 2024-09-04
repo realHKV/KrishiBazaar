@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Scaffold
 //noinspection UsingMaterialAndMaterial3Libraries
@@ -148,11 +150,13 @@ fun DetailScreen(item: itemData,onClickToSearchScreen: () -> Unit){
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding( 4.dp),
+                    .padding(4.dp),
                 //contentAlignment = Alignment.BottomCenter // Align FAB at the bottom center of the Box
             ){
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(start = 32.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 32.dp)
                 ){
                     FloatingActionButton(
                         onClick = { },
@@ -189,8 +193,13 @@ fun DetailScreen(item: itemData,onClickToSearchScreen: () -> Unit){
         }
 
     ) {innerpadding->
+        val scrollState1 = rememberScrollState()
         Column(
-            modifier = Modifier.padding(innerpadding)
+            modifier = Modifier
+                .padding(innerpadding)
+                .verticalScroll(scrollState1)
+            ,
+
         ) {
             //Spacer(modifier = Modifier.height(8.dp))
             Image(
@@ -210,7 +219,6 @@ fun DetailScreen(item: itemData,onClickToSearchScreen: () -> Unit){
                 text = item.name,
                 style = MaterialTheme.typography.headlineLarge,
                 modifier = Modifier.padding(top = 16.dp, start = 8.dp)
-
             )
 //            Divider(
 //                color = Color.Gray,
@@ -263,7 +271,7 @@ fun DetailScreen(item: itemData,onClickToSearchScreen: () -> Unit){
                 fontFamily = FontFamily.Serif,
                 modifier = Modifier.padding(8.dp)
             )
-
+            Spacer(modifier = Modifier.padding(bottom = 150.dp))
         }
     }
 }

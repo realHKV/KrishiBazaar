@@ -1,7 +1,9 @@
 package com.example.krishibazaar.Data
 
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.painter.Painter
 
+@Immutable
 data class itemData(
     val id: Int,
     val name: String,

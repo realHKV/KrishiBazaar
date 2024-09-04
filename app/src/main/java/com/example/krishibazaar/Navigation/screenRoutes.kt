@@ -19,6 +19,18 @@ data class DetailScreenRoute(
 object RentScreenRoute
 
 @Serializable
+object CartScreenRoute
+
+@Serializable
+object SellScreenRoute
+
+@Serializable
+object ChatBotScreenRoute
+
+@Serializable
+object LocationScreenRoute
+
+@Serializable
 object MandiRateScreenRoute
 data class screenRoutes(
     val HomeScreenRoute: String,

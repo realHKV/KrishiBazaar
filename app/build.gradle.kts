@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation (libs.androidx.material)
     implementation(libs.androidx.material3)
+    implementation(libs.play.services.maps)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -78,6 +79,12 @@ dependencies {
     implementation (libs.jetbrains.kotlinx.serialization.json)
 
     //implementation(kotlin("script-runtime"))
+
+    //viewmodel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
+    //location
+    implementation("com.google.android.gms:play-services-location:21.3.0")
+
 
 
 }

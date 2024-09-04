@@ -6,15 +6,20 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.krishibazaar.Data.itemData
+import com.example.krishibazaar.Screens.CartScreen
+import com.example.krishibazaar.Screens.ChatBotScreen
 import com.example.krishibazaar.Screens.DetailScreen
 import com.example.krishibazaar.Screens.HomeScreen
+import com.example.krishibazaar.Screens.RentScreen
 import com.example.krishibazaar.Screens.SearchScreen
+import com.example.krishibazaar.Screens.SellScreen
+import com.example.krishibazaar.location.LocationScreen
 
 @Composable
 fun navigation(SampleItems: List<itemData>) {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = HomeScreenRoute){
-        composable<HomeScreenRoute>{
+    NavHost(navController = navController, startDestination = HomeScreenRoute) {
+        composable<HomeScreenRoute> {
             HomeScreen(
                 SampleItems = SampleItems,
                 onClickToSearchScreen = {
@@ -23,35 +28,38 @@ fun navigation(SampleItems: List<itemData>) {
 
                 onClickToDetailScreen = {
                     navController.navigate(route = DetailScreenRoute(it.id))
+                },
+                onClickToChatbot = {
+                    navController.navigate(route = ChatBotScreenRoute)
+                },
+                onClickToRent = {
+                    navController.navigate(route = RentScreenRoute)
+                },
+                onClickToCart = {
+                    navController.navigate(route = CartScreenRoute)
+                },
+                onClickToSell = {
+                    navController.navigate(route = SellScreenRoute)
+                },
+                onClickToLocation = {
+                    navController.navigate(route = LocationScreenRoute)
                 }
-//                onNavigateToAbout = {
-//                    navController.navigate(route = AboutRoute)
-//                }
             )
         }
-        composable<SearchScreenRoute>{
+        composable<SearchScreenRoute> {
 
-                SearchScreen(
-                    SampleItems = SampleItems,
-                    onClickToHomeScreen = {
-                        navController.navigate(route = HomeScreenRoute)
-                    },
-                    onClickToDetailScreen = {
-                        navController.navigate(route = DetailScreenRoute(it.id))
-                    }
-                )
-//            val args = it.toRoute<detailroute>()
-//            DetailScreen(args.id,
-//                onClickToHome = {
-//                    navController.navigate(route = HomeRoute)
-//                },
-//                onNavigateToAbout = {
-//                    navController.navigate(route = AboutRoute)
-//                }
-//            )
+            SearchScreen(
+                SampleItems = SampleItems,
+                onClickToHomeScreen = {
+                    navController.navigate(route = HomeScreenRoute)
+                },
+                onClickToDetailScreen = {
+                    navController.navigate(route = DetailScreenRoute(it.id))
+                }
+            )
         }
 
-        composable<DetailScreenRoute>{ it ->
+        composable<DetailScreenRoute> { it ->
             val args = it.toRoute<DetailScreenRoute>()
             SampleItems.find { it.id == args.id }?.let {
                 DetailScreen(it,
@@ -60,17 +68,47 @@ fun navigation(SampleItems: List<itemData>) {
                     }
                 )
             }
-//            DetailScreen(args.id,
-//                onClickToSearchScreen = {
-//                    navController.navigate(route = HomeScreenRoute)
-//                }
-//            )
         }
-//        composable<AboutRoute>{
-//            AboutScreen(onNavigateToHome = {
-//                navController.navigate(route = HomeRoute)
-//            },onNavigateToAbout = {})
-//        }
+
+        composable<RentScreenRoute> {
+            RentScreen(
+                onClickToHomeScreen = {
+                    navController.navigate(route = HomeScreenRoute)
+                }
+            )
+        }
+
+        composable<CartScreenRoute> {
+            CartScreen(
+                onClickToHomeScreen = {
+                    navController.navigate(route = HomeScreenRoute)
+                }
+            )
+        }
+
+        composable<SellScreenRoute> {
+            SellScreen(
+                onClickToHomeScreen = {
+                    navController.navigate(route = HomeScreenRoute)
+                }
+            )
+        }
+
+        composable<ChatBotScreenRoute> {
+            ChatBotScreen(
+                onClickToHomeScreen = {
+                    navController.navigate(route = HomeScreenRoute)
+                }
+            )
+        }
+
+        composable<LocationScreenRoute> {
+            LocationScreen(
+                onClickToHomeScreen = {
+                    navController.navigate(route = HomeScreenRoute)
+                }
+            )
+        }
     }
 
 }

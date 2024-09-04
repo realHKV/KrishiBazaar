@@ -49,6 +49,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -56,6 +57,8 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -67,16 +70,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.krishibazaar.Data.itemData
 import com.example.krishibazaar.R
+import com.example.krishibazaar.ui.Bot
+import com.example.krishibazaar.ui.Category
+import com.example.krishibazaar.ui.Sell
+import com.example.krishibazaar.ui.TractorIcon
+
 //import com.example.krishibazaar.uiElements.HomeScreenItemCard
 //import com.example.krishibazaar.uiElements.HomeScreenItemCard
 //import com.example.krishibazaar.uiElements.ItemCard
 
 
 @Composable
-fun CircularButton(icon: @Composable () -> Unit, text: String) {
+fun CircularButton(icon: @Composable () -> Unit, text: String, onClick: () -> Unit) {
     Column(horizontalAlignment = Alignment.CenterHorizontally){
         Button(
-            onClick = { /* Handle button click */ },
+            onClick = onClick,
             shape = CircleShape,
             elevation =  ButtonDefaults.elevatedButtonElevation(
                 defaultElevation = 30.dp,
@@ -150,8 +158,14 @@ fun OutlinedCardExample() {
 fun HomeScreen(
     onClickToSearchScreen: () -> Unit,
     onClickToDetailScreen: (itemData) -> Unit,
+    onClickToChatbot: () -> Unit,
+    onClickToRent: () -> Unit,
+    onClickToCart: () -> Unit,
+    onClickToSell: () -> Unit,
+    onClickToLocation: () -> Unit,
     SampleItems: List<itemData>
 ) {
+
 
     val scrollState = rememberScrollState()
     Scaffold(
@@ -191,43 +205,6 @@ fun HomeScreen(
                  titleContentColor = colorResource(id = R.color.white)
              )
          ) },
-//        floatingActionButton = {
-//            Box(
-//                modifier = Modifier
-//                    .fillMaxSize(),
-//                contentAlignment = Alignment.BottomCenter // Align FAB at the bottom center of the Box
-//            ){
-//                FloatingActionButton(
-//                    onClick = { /*TODO*/ },
-//                    modifier = Modifier
-//                        .size(70.dp)
-//                        .offset(y = (50).dp) // Adjust the offset to position the FAB above the bottom bar
-//
-//                        //.align(Alignment.CenterHorizontally) // Center the FAB horizontally
-//                        .shadow(elevation = 10.dp, shape = CircleShape)
-//                    ,
-//                ) {
-//                    Icon(
-//
-//                        imageVector = Icons.Default.Add,
-//                        contentDescription = "Localized description",
-//                        tint = MaterialTheme.colorScheme.inversePrimary
-//                    )
-//                }
-//            }
-//
-//        },
-//        bottomBar = {
-//            NavigationBar(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .height(64.dp)
-//                ,
-//                containerColor = MaterialTheme.colorScheme.secondary,
-//            ) {
-//
-//            }
-//        },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
         Column(modifier = Modifier
@@ -240,20 +217,29 @@ fun HomeScreen(
         ){
             //Spacer(modifier = Modifier.height(16.dp))
             OutlinedCardExample()
+            ///val tractorIcon: ImageVector = rememberVectorPainter(image = R.drawable.tractor_icon)
+
 
             val icons = listOf(
-                Icons.Default.AccountCircle,
-                Icons.Default.Star,
                 Icons.Default.LocationOn,
-                Icons.Default.Settings,
-                Icons.Default.CheckCircle,
-                Icons.Default.ShoppingCart
+                Category,
+                Bot,
+                TractorIcon,
+                Icons.Default.ShoppingCart,
+                Sell
             )
             val iconDescriptions = listOf(
                 "Near You","Categories", "Ai Chatbot", "Rent", "Buy", "Sell"
             )
             //"CartX","Ai ChatbotX","Near YouX","AccountX","Mandi RatesX", "SettingsX",
-
+            val navigationActions = listOf(
+                { onClickToLocation() },
+                { /* No navigation for "Categories yet" */ },
+                { onClickToChatbot() },  // Ai Chatbot
+                { onClickToRent() },     // Rent
+                { onClickToCart() },      // Buy
+                { onClickToSell() }      // Sell
+            )
             Box(
                 modifier = Modifier
                     //.wrapContentHeight()
@@ -281,7 +267,8 @@ fun HomeScreen(
                                         .wrapContentSize()
                                 )
                             },
-                            text = iconDescriptions[index]
+                            text = iconDescriptions[index],
+                            onClick = navigationActions[index]
                         )
                     }
                 }
@@ -299,10 +286,7 @@ fun HomeScreen(
                 fontWeight = FontWeight.W900,
 
             )
-            //Spacer(modifier = Modifier.height(16.dp))
 
-            val painter= painterResource(id = R.drawable.doge)
-            val codes  = listOf("1","2","3","4","5")
             Box(modifier = Modifier.fillMaxWidth()){
                 LazyRow (
                     modifier = Modifier
@@ -339,7 +323,12 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
 
-                    items(SampleItems.size) { item ->
+                    items(
+                        SampleItems.size,
+                        key = {
+                            SampleItems[it].id
+                        }
+                    ) { item ->
                         SaleItemCard(item = SampleItems[item],onClickToDetailScreen = onClickToDetailScreen)
                     }
                 }
@@ -353,9 +342,6 @@ fun HomeScreen(
 @Preview
 @Composable
 fun HomescreenPreview(){
-    val painter1: Painter = painterResource(id = R.drawable.doge)
-    val painter2: Painter = painterResource(id = R.drawable.lud)
-    val painter3: Painter = painterResource(id = R.drawable.no_maidens)
     val sampleItems = listOf(
         itemData(
             id = 1,
@@ -363,9 +349,9 @@ fun HomescreenPreview(){
             soldBy = "Shankar Singh Gaonwala",
             stars = 5,
             description = "Fresh, organic potatoes from my farm. Perfect for curries, fries, or a hearty aloo paratha. Grown with love and minimal use of chemicals.",
-            painter = painter1,
-            originalPrice = 1000.0,
-            salePrice = 850.0
+            painter = painterResource(id = R.drawable.wa_potato),
+            originalPrice = 100.0,
+            salePrice = 85.0
         ),
         itemData(
             id = 2,
@@ -373,9 +359,9 @@ fun HomescreenPreview(){
             soldBy = "Girdharilal Yadav",
             stars = 4,
             description = "Plump and shiny eggplants, ready to be roasted or turned into a delicious baingan bharta. Grown in the rich soil of my village farm.",
-            painter = painter1,
-            originalPrice = 600.0,
-            salePrice = 450.0
+            painter = painterResource(id = R.drawable.wa_baingan),
+            originalPrice = 60.0,
+            salePrice = 45.0
         ),
         itemData(
             id = 3,
@@ -383,9 +369,9 @@ fun HomescreenPreview(){
             soldBy = "Kamala Devi",
             stars = 4,
             description = "Tender and fresh gheeya, ideal for light curries and stews. Handpicked from my garden every morning to ensure the best quality.",
-            painter = painter2,
-            originalPrice = 200.0,
-            salePrice = 150.0
+            painter = painterResource(id = R.drawable.wa_gheeya),
+            originalPrice = 20.0,
+            salePrice = 15.0
         ),
         itemData(
             id = 4,
@@ -393,9 +379,9 @@ fun HomescreenPreview(){
             soldBy = "Ramprasad Sharma",
             stars = 5,
             description = "Green and leafy spinach, full of iron and freshness. My palak is a favorite for making saag, palak paneer, or a healthy salad.",
-            painter = painter1,
-            originalPrice = 300.0,
-            salePrice = 250.0
+            painter = painterResource(id = R.drawable.wa_palak),
+            originalPrice = 30.0,
+            salePrice = 25.0
         ),
         itemData(
             id = 5,
@@ -403,9 +389,9 @@ fun HomescreenPreview(){
             soldBy = "Ramesh Kumar",
             stars = 4,
             description = "Crisp and spicy radishes, perfect for a winter salad or to add crunch to your meals. Grown in our family farm using traditional methods.",
-            painter = painter1,
-            originalPrice = 180.0,
-            salePrice = 120.0
+            painter = painterResource(id = R.drawable.wa_mooli),
+            originalPrice = 18.0,
+            salePrice = 12.0
         ),
         itemData(
             id = 6,
@@ -413,9 +399,9 @@ fun HomescreenPreview(){
             soldBy = "Suresh Kisan",
             stars = 5,
             description = "Fresh bhindi, known for its tenderness and perfect for making bhindi fry or curry. Straight from my fields to your kitchen.",
-            painter = painter1,
-            originalPrice = 400.0,
-            salePrice = 320.0
+            painter = painterResource(id = R.drawable.wa_bhindi),
+            originalPrice = 40.0,
+            salePrice = 32.0
         ),
         itemData(
             id = 7,
@@ -423,9 +409,9 @@ fun HomescreenPreview(){
             soldBy = "Bhawani Shankar",
             stars = 4,
             description = "Sweet and ripe pumpkin, great for making soups, curries, or even desserts. Harvested at the peak of its sweetness.",
-            painter = painter1,
-            originalPrice = 350.0,
-            salePrice = 280.0
+            painter = painterResource(id = R.drawable.wa_kaddu),
+            originalPrice = 35.0,
+            salePrice = 28.0
         ),
         itemData(
             id = 8,
@@ -433,9 +419,9 @@ fun HomescreenPreview(){
             soldBy = "Laxmi Narayan",
             stars = 5,
             description = "Bright orange carrots, crunchy and sweet. Perfect for salads, juices, or traditional halwa. Grown in my small farm with care.",
-            painter = painter3,
-            originalPrice = 250.0,
-            salePrice = 200.0
+            painter = painterResource(id = R.drawable.wa_carrot),
+            originalPrice = 25.0,
+            salePrice = 20.0
         ),
         itemData(
             id = 9,
@@ -443,9 +429,9 @@ fun HomescreenPreview(){
             soldBy = "Hari Singh",
             stars = 5,
             description = "High-quality masoor dal, perfect for daily cooking. These lentils are rich in protein and have been hand-sorted for the best quality.",
-            painter = painter3,
-            originalPrice = 1200.0,
-            salePrice = 980.0
+            painter = painterResource(id = R.drawable.masoor),
+            originalPrice = 120.0,
+            salePrice = 98.0
         ),
         itemData(
             id = 10,
@@ -453,10 +439,10 @@ fun HomescreenPreview(){
             soldBy = "Rajendra Mechanic",
             stars = 4,
             description = "A reliable tractor, perfect for plowing and other farm activities. Well-maintained and ready to serve your agricultural needs.",
-            painter = painter2,
-            originalPrice = 150000.0,
-            salePrice = 130000.0
+            painter = painterResource(id = R.drawable.tractor),
+            originalPrice = 150.0,
+            salePrice = 130.0
         )
     )
-    HomeScreen({},{}, sampleItems)
+    HomeScreen({},{},{},{},{},{},{}, sampleItems)
 }

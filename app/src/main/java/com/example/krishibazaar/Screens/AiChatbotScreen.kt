@@ -1,5 +1,6 @@
 package com.example.krishibazaar.Screens
 
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -26,7 +27,7 @@ import com.example.krishibazaar.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RentScreen(
+fun ChatBotScreen(
     onClickToHomeScreen: () -> Unit
 ) {
     Scaffold(
@@ -55,15 +56,15 @@ fun RentScreen(
                         Icon(
                             imageVector = Icons.Default.AccountCircle,
                             contentDescription = "Login",
-                            tint = colorResource(id = R.color.white)//MaterialTheme.colorScheme.inversePrimary
+                            tint = colorResource(id = R.color.white)
                         )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = colorResource(id = R.color.teal_700),
-                    titleContentColor = colorResource(id = R.color.white)
 //                    containerColor = MaterialTheme.colorScheme.secondary,
 //                    titleContentColor = MaterialTheme.colorScheme.inversePrimary,
+                    containerColor = colorResource(id = R.color.teal_700),
+                    titleContentColor = colorResource(id = R.color.white)
                 )
             )
         }
@@ -74,7 +75,7 @@ fun RentScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Rent Equipment Here ,equipment like tractors , harvestors , fertilisers etc",
+                text = "ChatBot Shows Here",
                 modifier = Modifier.padding(16.dp),
 //                textAlign = Alignment.CenterHorizontally,
                 style = MaterialTheme.typography.headlineLarge
@@ -85,12 +86,18 @@ fun RentScreen(
 //                textAlign = Alignment.CenterHorizontally,
                 style = MaterialTheme.typography.headlineLarge
             )
+            Text(
+                text = "//Chat with bot to ask for valuable advice , information or help ",
+                modifier = Modifier.padding(16.dp),
+//                textAlign = Alignment.CenterHorizontally,
+                style = MaterialTheme.typography.headlineLarge
+            )
         }
     }
 }
 
 @Preview
 @Composable
-fun RentScreenPreview(){
-    RentScreen({})
+fun ChatBotScreenPreview(){
+    ChatBotScreen({})
 }
