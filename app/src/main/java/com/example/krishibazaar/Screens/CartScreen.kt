@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -81,7 +82,9 @@ fun CartItemRow(
         // Quantity Controls
         Row {
             Button(
+                modifier = Modifier.wrapContentSize().size(50.dp),
                 onClick = onDecreaseQuantity,
+
                 colors = ButtonDefaults.buttonColors(
                     containerColor = colorResource(id = R.color.teal_200)
                 )
@@ -90,6 +93,7 @@ fun CartItemRow(
             }
             Text(text = item.quantity.toString(), modifier = Modifier.padding(8.dp))
             Button(
+                modifier = Modifier.wrapContentSize().size(50.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = colorResource(id = R.color.teal_200)
                 ),

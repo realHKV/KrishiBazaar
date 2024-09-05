@@ -60,13 +60,13 @@ fun SellScreen(
 //             title =  {Text(stringResource(R.string.About_Screen))} ,
                 title = { Text(text = "Krishi Bazaar") },
                 actions = {
-                    IconButton(onClick = { /* Handle search icon click */ }) {
-                        Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = "Search",
-                            tint = colorResource(id = R.color.white)
-                        )
-                    }
+//                    IconButton(onClick = { /* Handle search icon click */ }) {
+//                        Icon(
+//                            imageVector = Icons.Default.Search,
+//                            contentDescription = "Search",
+//                            tint = colorResource(id = R.color.white)
+//                        )
+//                    }
                     IconButton(onClick = { /* Handle login icon click */ }) {
                         Icon(
                             imageVector = Icons.Default.AccountCircle,
