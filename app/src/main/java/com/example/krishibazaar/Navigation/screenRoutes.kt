@@ -31,6 +31,12 @@ object ChatBotScreenRoute
 object LocationScreenRoute
 
 @Serializable
+object CategoryScreenRoute
+
+@Serializable
+object AboutScreenRoute
+
+@Serializable
 object MandiRateScreenRoute
 data class screenRoutes(
     val HomeScreenRoute: String,

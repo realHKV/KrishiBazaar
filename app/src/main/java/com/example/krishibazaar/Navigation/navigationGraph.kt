@@ -6,7 +6,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.krishibazaar.Data.itemData
+import com.example.krishibazaar.Screens.AboutScreen
 import com.example.krishibazaar.Screens.CartScreen
+import com.example.krishibazaar.Screens.CategoryScreen
 import com.example.krishibazaar.Screens.ChatBotScreen
 import com.example.krishibazaar.Screens.DetailScreen
 import com.example.krishibazaar.Screens.HomeScreen
@@ -43,6 +45,12 @@ fun navigation(SampleItems: List<itemData>) {
                 },
                 onClickToLocation = {
                     navController.navigate(route = LocationScreenRoute)
+                },
+                onClickToCategoryScreen = {
+                    navController.navigate(route = CategoryScreenRoute)
+                },
+                onClickToAboutScreen = {
+                    navController.navigate(route = AboutScreenRoute)
                 }
             )
         }
@@ -104,6 +112,22 @@ fun navigation(SampleItems: List<itemData>) {
 
         composable<LocationScreenRoute> {
             LocationScreen(
+                onClickToHomeScreen = {
+                    navController.navigate(route = HomeScreenRoute)
+                }
+            )
+        }
+
+        composable<CategoryScreenRoute> {
+            CategoryScreen(
+                onClickToHomeScreen = {
+                    navController.navigate(route = HomeScreenRoute)
+                }
+            )
+        }
+
+        composable<AboutScreenRoute> {
+            AboutScreen(
                 onClickToHomeScreen = {
                     navController.navigate(route = HomeScreenRoute)
                 }

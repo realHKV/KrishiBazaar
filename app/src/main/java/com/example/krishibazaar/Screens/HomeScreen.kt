@@ -163,6 +163,8 @@ fun HomeScreen(
     onClickToCart: () -> Unit,
     onClickToSell: () -> Unit,
     onClickToLocation: () -> Unit,
+    onClickToAboutScreen: () -> Unit,
+    onClickToCategoryScreen: () -> Unit,
     SampleItems: List<itemData>
 ) {
 
@@ -190,7 +192,7 @@ fun HomeScreen(
                          tint = colorResource(id = R.color.white)//MaterialTheme.colorScheme.inversePrimary
                      )
                  }
-                 IconButton(onClick = { /* Handle login icon click */ }) {
+                 IconButton(onClick = { onClickToAboutScreen() }) {
                      Icon(
                          imageVector = Icons.Default.AccountCircle,
                          contentDescription = "Login",
@@ -234,7 +236,7 @@ fun HomeScreen(
             //"CartX","Ai ChatbotX","Near YouX","AccountX","Mandi RatesX", "SettingsX",
             val navigationActions = listOf(
                 { onClickToLocation() },
-                { /* No navigation for "Categories yet" */ },
+                { onClickToCategoryScreen() },
                 { onClickToChatbot() },  // Ai Chatbot
                 { onClickToRent() },     // Rent
                 { onClickToCart() },      // Buy
@@ -444,5 +446,5 @@ fun HomescreenPreview(){
             salePrice = 130.0
         )
     )
-    HomeScreen({},{},{},{},{},{},{}, sampleItems)
+    HomeScreen({},{},{},{},{},{},{},{},{}, sampleItems)
 }
