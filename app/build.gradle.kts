@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
+    kotlin("kapt")
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -64,6 +66,7 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.benchmark.macro)
+    implementation(libs.googleid)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -83,10 +86,28 @@ dependencies {
     //implementation(kotlin("script-runtime"))
 
     //viewmodel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     //location
-    implementation("com.google.android.gms:play-services-location:21.3.0")
+    implementation(libs.play.services.location)
 
+//    implementation(libs.dagger.hilt.android)
+    implementation(libs.firebase.crashlytics.buildtools)
+//    kapt(libs.dagger.hilt.compiler)
+//    implementation(libs.dagger.hilt.compose)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.storage)
+    implementation(libs.play.services.auth)
+    //implementation (libs.play.services.auth)
+    implementation (libs.androidx.credentials)
+    implementation (libs.androidx.credentials.play.services.auth)
+    implementation (libs.googleid)
+    //  implementation(libs.firebase.auth)
+
+    implementation(libs.androidx.runtime.livedata)
 
 
 }

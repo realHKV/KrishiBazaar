@@ -1,4 +1,4 @@
-package com.example.krishibazaar.Screens
+package com.example.krishibazaar.Presentation.Screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

@@ -17,9 +17,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.krishibazaar.Data.itemData
 import com.example.krishibazaar.Navigation.navigation
-import com.example.krishibazaar.Screens.DetailScreen
-import com.example.krishibazaar.Screens.HomeScreen
-import com.example.krishibazaar.Screens.SearchScreen
+import com.example.krishibazaar.Presentation.Screens.DetailScreen
+import com.example.krishibazaar.Presentation.Screens.HomeScreen
+import com.example.krishibazaar.Presentation.Screens.SearchScreen
 import com.example.krishibazaar.ui.theme.KrishiBazaarTheme
 
 class MainActivity : ComponentActivity() {
@@ -38,6 +38,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun myApp(){
+
+
     val sampleItems = listOf(
         itemData(
             id = 1,

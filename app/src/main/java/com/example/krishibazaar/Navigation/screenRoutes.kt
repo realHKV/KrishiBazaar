@@ -37,6 +37,12 @@ object CategoryScreenRoute
 object AboutScreenRoute
 
 @Serializable
+object SignInRoute
+
+@Serializable
+object SignUpRoute
+
+@Serializable
 object MandiRateScreenRoute
 data class screenRoutes(
     val HomeScreenRoute: String,

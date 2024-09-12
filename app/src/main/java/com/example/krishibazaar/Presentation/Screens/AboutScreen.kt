@@ -1,4 +1,4 @@
-package com.example.krishibazaar.Screens
+package com.example.krishibazaar.Presentation.Screens
 
 //import androidx.benchmark.perfetto.Row
 import androidx.compose.foundation.Image
@@ -44,6 +44,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.krishibazaar.R
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -161,7 +163,7 @@ fun AboutScreen(
 
                 // Email
                 Text(
-                    text = "rambestfarmerfrfr@example.com",
+                    text = Firebase.auth.currentUser?.email.toString(),
                     fontSize = 16.sp,
                     modifier = Modifier.padding(16.dp),
                     color = Color.Black
