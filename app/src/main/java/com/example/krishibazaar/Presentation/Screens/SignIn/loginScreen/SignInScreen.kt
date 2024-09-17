@@ -111,7 +111,7 @@ fun SignInScreen(navController: NavController,googleSignInViewModel: GoogleSignI
 
                         when (uiState.value) {
                             is SignInState.Success -> {
-                                Log.d("success","success")
+                                Log.d("HKV1","success")
                                 navController.navigate(route = HomeScreenRoute){
                                     popUpTo(SignInRoute) { inclusive = true }
                                 }

@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.benchmark.macro)
     implementation(libs.googleid)
+    implementation(libs.firebase.firestore.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -108,6 +109,11 @@ dependencies {
     //  implementation(libs.firebase.auth)
 
     implementation(libs.androidx.runtime.livedata)
+    val retrofitVersion ="2.11.0"
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    //implementation("androidx.compose.runtime:runtime-livedata:1.7.1")
+    //implementation("io.coil-kt:coil-compose:2.7.0")
 
 
 }

@@ -4,22 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.krishibazaar.Data.itemData
+import com.example.krishibazaar.Data.Item.itemData
 import com.example.krishibazaar.Navigation.navigation
-import com.example.krishibazaar.Presentation.Screens.DetailScreen
-import com.example.krishibazaar.Presentation.Screens.HomeScreen
-import com.example.krishibazaar.Presentation.Screens.SearchScreen
 import com.example.krishibazaar.ui.theme.KrishiBazaarTheme
 
 class MainActivity : ComponentActivity() {

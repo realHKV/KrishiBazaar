@@ -20,36 +20,61 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.krishibazaar.Data.NavigationItems
+import com.example.krishibazaar.Navigation.HomeScreenRoute
+import com.example.krishibazaar.Navigation.UploadItemForSaleScreenRoute
 import com.example.krishibazaar.R
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SellScreen(
-    onClickToHomeScreen: () -> Unit
+    navController: NavController
 ) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 navigationIcon = {
-                    IconButton(onClick = onClickToHomeScreen) {
+                    IconButton(onClick = { navController.navigate(HomeScreenRoute) }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Localized description",
@@ -97,7 +122,7 @@ fun SellScreen(
             Box(
                 modifier = Modifier
                     .padding(16.dp)
-                    .clickable {  }
+                    .clickable { navController.navigate(UploadItemForSaleScreenRoute) }
                     .fillMaxWidth()
                     .height(120.dp)
                     .background(Color(0xFFFFCDD2))
@@ -115,7 +140,7 @@ fun SellScreen(
                 modifier = Modifier
                     .padding(16.dp)
                     .fillMaxWidth()
-                    .clickable {  }
+                    .clickable { }
                     .height(120.dp)
                     .background(Color(0xFFC8E6C9))
                     .border(2.dp, Color.Black)
@@ -133,7 +158,7 @@ fun SellScreen(
                     .padding(16.dp)
                     .fillMaxWidth()
                     .height(120.dp)
-                    .clickable {  }
+                    .clickable { }
                     .background(Color(0xFFBBDEFB))
                     .border(2.dp, Color.Black)
                 ,
@@ -150,7 +175,7 @@ fun SellScreen(
                     .padding(16.dp)
                     .fillMaxWidth()
                     .height(120.dp)
-                    .clickable {  }
+                    .clickable { }
                     .background(Color(0xFFFFF9C4))
                     .border(2.dp, Color.Black)
                 ,
@@ -170,7 +195,7 @@ fun SellScreen(
                 modifier = Modifier
                     .padding(16.dp)
                     .fillMaxWidth()
-                    .clickable {  }
+                    .clickable { }
                     .height(120.dp)
                     .background(Color(0xFFD1C4E9))
                     .border(2.dp, Color.Black)
@@ -183,7 +208,6 @@ fun SellScreen(
                     fontWeight = FontWeight.Bold
                 )
             }
-
             //Spacer(modifier = Modifier.height(24.dp))
         }
     }
@@ -191,5 +215,5 @@ fun SellScreen(
 @Preview
 @Composable
 fun SellScreenPreview(){
-    SellScreen({})
+    SellScreen(navController = NavController(LocalContext.current))
 }

@@ -2,12 +2,13 @@ package com.example.krishibazaar.Navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.example.krishibazaar.Data.itemData
-import com.example.krishibazaar.Presentation.Screens.AboutScreen
+import com.example.krishibazaar.Data.Item.itemData
+import com.example.krishibazaar.Presentation.Screens.about.AboutScreen
 import com.example.krishibazaar.Presentation.Screens.CartScreen
 import com.example.krishibazaar.Presentation.Screens.CategoryScreen
 import com.example.krishibazaar.Presentation.Screens.ChatBotScreen
@@ -17,8 +18,11 @@ import com.example.krishibazaar.Presentation.Screens.RentScreen
 import com.example.krishibazaar.Presentation.Screens.SearchScreen
 import com.example.krishibazaar.Presentation.Screens.SellScreen
 import com.example.krishibazaar.Presentation.Screens.SignIn.loginScreen.SignInScreen
+import com.example.krishibazaar.Presentation.uploadingProducts.UploadItemForSaleScreen
 import com.example.krishibazaar.Presentation.Screens.signupScreen.SignUpScreen
 import com.example.krishibazaar.Presentation.googleSignIn.GoogleSignInViewModel
+import com.example.krishibazaar.Presentation.weather.presentation.WeatherScreen
+import com.example.krishibazaar.Presentation.weather.presentation.WeatherViewModel
 import com.example.krishibazaar.location.LocationScreen
 import com.google.firebase.auth.FirebaseAuth
 
@@ -34,6 +38,7 @@ fun navigation(SampleItems: List<itemData>) {
     NavHost(navController = navController, startDestination = start) {
         composable<HomeScreenRoute> {
             HomeScreen(
+                navController,
                 SampleItems = SampleItems,
                 onClickToSearchScreen = {
                     navController.navigate(route = SearchScreenRoute)
@@ -107,9 +112,7 @@ fun navigation(SampleItems: List<itemData>) {
 
         composable<SellScreenRoute> {
             SellScreen(
-                onClickToHomeScreen = {
-                    navController.navigate(route = HomeScreenRoute)
-                }
+                navController = navController
             )
         }
 
@@ -139,6 +142,8 @@ fun navigation(SampleItems: List<itemData>) {
 
         composable<AboutScreenRoute> {
             AboutScreen(
+                userViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+                navController = navController,
                 onClickToHomeScreen = {
                     navController.navigate(route = HomeScreenRoute)
                 }
@@ -155,6 +160,21 @@ fun navigation(SampleItems: List<itemData>) {
             SignUpScreen(
                 navController
             )
+        }
+
+        composable<UploadItemForSaleScreenRoute> {
+            UploadItemForSaleScreen(
+                navController,
+//                onProductAdded = {
+//                    navController.navigate(route = HomeScreenRoute)
+//                }
+            )
+        }
+
+        composable<WeatherScreenRoute> {
+            WeatherScreen(
+                weatherViewModel = WeatherViewModel() ,
+                navController = navController)
         }
 
     }

@@ -11,7 +11,7 @@ import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.example.krishibazaar.Data.User
+import com.example.krishibazaar.Data.User.User
 import com.example.krishibazaar.Data.constant.ServerClient
 import com.example.krishibazaar.Navigation.HomeScreenRoute
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption

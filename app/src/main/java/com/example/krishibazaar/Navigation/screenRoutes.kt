@@ -1,6 +1,5 @@
 package com.example.krishibazaar.Navigation
 
-import com.example.krishibazaar.Data.itemData
 import kotlinx.serialization.Serializable
 
 
@@ -14,6 +13,9 @@ object SearchScreenRoute
 data class DetailScreenRoute(
     val id: Int
 )
+
+@Serializable
+object WeatherScreenRoute
 
 @Serializable
 object RentScreenRoute
@@ -41,6 +43,20 @@ object SignInRoute
 
 @Serializable
 object SignUpRoute
+
+@Serializable
+object UploadItemForSaleScreenRoute
+
+@Serializable
+object InfoScreenRoute
+
+@Serializable
+object EditScreenRoute
+
+@Serializable
+object SettingsScreenRoute
+
+
 
 @Serializable
 object MandiRateScreenRoute
